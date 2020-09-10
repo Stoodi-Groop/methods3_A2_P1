@@ -75,7 +75,7 @@ Load necessary libraries : what will you need?
 - e.g. something to plot with
 
 ```{r Load Libraries, include = FALSE}
-
+pacman::p_load(tidyverse, MuMIn, lme4, lmerTest, purrr)
 ```
 
 ### Define your working directory and load the data
@@ -88,7 +88,7 @@ If you opened this Rmd file outside of a project, you will need some code to fin
 - Load the data you saved last time (use read_csv(fileName))
 
 ```{r Load Data, include = FALSE}
-
+df <- read_csv("portfolio1_data.csv")
 ```
 
 ### Characterize the participants (Exercise 1)
@@ -100,6 +100,23 @@ Make sure the variables are in the right format.
 Describe the characteristics of the two groups of participants and whether the two groups are well matched.
 
 ```{r descriptive stats, include = FALSE}
+#looking at the data
+str(df)
+
+#reformating
+cols <- c("ID", "VISIT", "Diagnosis", "Gender")
+df[cols] <- lapply(df[cols], as.factor)
+
+#renaming coloumns
+df <- df %>% 
+  rename(verbalIQ = ExpressiveLangRaw,
+         nonverbalIQ = MullenRaw,
+         verbalIQ1 = ExpressiveLangRaw1,
+         nonverbalIQ1 = MullenRaw1)
+
+df %>% 
+  split(df$Diagnosis) %>% 
+  map(summary)
 
 ```
 
