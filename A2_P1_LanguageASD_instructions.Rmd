@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(include = FALSE)
 ```
-hej
+
 # Assignment 2
 
 In this assignment you will have to discuss a few important questions (given the data you have). More details below. The assignment submitted to the teachers consists of:
@@ -76,6 +76,8 @@ Load necessary libraries : what will you need?
 
 ```{r Load Libraries, include = FALSE}
 
+pacman::p_load(tidyverse, lme4, lmerTest, MuMIn)
+
 ```
 
 ### Define your working directory and load the data
@@ -89,6 +91,8 @@ If you opened this Rmd file outside of a project, you will need some code to fin
 
 ```{r Load Data, include = FALSE}
 
+df <- read_csv("portfolio1_data.csv")
+
 ```
 
 ### Characterize the participants (Exercise 1)
@@ -100,6 +104,27 @@ Make sure the variables are in the right format.
 Describe the characteristics of the two groups of participants and whether the two groups are well matched.
 
 ```{r descriptive stats, include = FALSE}
+str(df) #Checking the class of the variables
+head(df)
+```
+
+
+```{r descriptive stats, include = FALSE}
+#Changing some variables into factors
+cols <- c("ID", "VISIT", "Ethnicity", "Gender", "Diagnosis")
+df[cols] <- lapply(df[cols], as.factor)
+
+
+df <- df %>% 
+  rename(verbalIQ = ExpressiveLangRaw,
+         nonVerbalIQ = MullenRaw,
+         nonVerbalIQ1 = MullenRaw1,
+         verbalIQ1 = ExpressiveLangRaw1)
+
+
+df %>% 
+  group_by(Diagnosis, Gender) %>%
+  tally()
 
 ```
 
