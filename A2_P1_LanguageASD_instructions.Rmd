@@ -75,9 +75,13 @@ Load necessary libraries : what will you need?
 - e.g. something to plot with
 
 ```{r Load Libraries, include = FALSE}
+<<<<<<< HEAD
 
 pacman::p_load(tidyverse, lme4, lmerTest, MuMIn)
 
+=======
+pacman::p_load(tidyverse, MuMIn, lme4, lmerTest, purrr)
+>>>>>>> a07d5c3b8d68a671a73f73339fcd6fbdaf1bdc56
 ```
 
 ### Define your working directory and load the data
@@ -90,6 +94,7 @@ If you opened this Rmd file outside of a project, you will need some code to fin
 - Load the data you saved last time (use read_csv(fileName))
 
 ```{r Load Data, include = FALSE}
+<<<<<<< HEAD
 
 df <- read_csv("portfolio1_data.csv")
 
@@ -123,8 +128,9 @@ df <- df %>%
 
 
 df %>% 
-  group_by(Diagnosis, Gender) %>%
-  tally()
+  split(df$Diagnosis) %>% 
+  map(summary)
+
 
 ```
 
